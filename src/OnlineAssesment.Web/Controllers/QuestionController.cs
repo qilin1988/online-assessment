@@ -40,6 +40,7 @@ namespace OnlineAssesment.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult CreateQuestion(Question newQuestion) {
             _questionService.AddQuestion(newQuestion);
             return RedirectToAction("List", new { courseLevel = newQuestion.CourseLevel });

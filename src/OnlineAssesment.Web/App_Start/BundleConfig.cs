@@ -28,10 +28,15 @@ namespace OnlineAssesment.Web
                         "~/Scripts/jquery.validate.globalize.js",
                         "~/Scripts/bootstrap.validate.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/editor").Include(
+                        "~/Scripts/wysihtml5/wysihtml5-0.3.0.js",
+                        "~/Scripts/bootstrap-wysihtml5-0.0.2.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/signin.css"));
+                      "~/Content/signin.css",
+                      "~/Content/bootstrap-wysihtml5-0.0.2.css"));
         }
     }
 }
