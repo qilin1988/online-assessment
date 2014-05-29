@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OnlineAssessment.Domain
 {
-    public class SystemUser : IdentityUser
+    public class SystemUser : IdentityUser<Guid,IdentityUserLogin<Guid>, IdentityUserRole<Guid>, IdentityUserClaim<Guid>>
     {
         public string Name { get; set; }
         public string Phone { get; set; }

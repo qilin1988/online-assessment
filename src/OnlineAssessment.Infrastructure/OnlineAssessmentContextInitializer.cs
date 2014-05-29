@@ -13,7 +13,9 @@ namespace OnlineAssessment.Infrastructure
     {
         protected override void Seed(OnlineAssessmentContext context) {
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
-            var userManager = new UserManager<SystemUser>(new UserStore<SystemUser>(context));
+            var userManager = new UserManager<SystemUser, Guid>(
+                new UserStore<SystemUser, IdentityRole<Guid, IdentityUserRole<Guid>>, Guid,
+                              IdentityUserLogin<Guid>, IdentityUserRole<Guid>, IdentityUserClaim<Guid>>(context));
 
 
             // add pre-defined roles.

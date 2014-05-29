@@ -1,13 +1,21 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using System;
+using System.Data.Entity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using OnlineAssessment.Domain;
 using OnlineAssessment.Infrastructure.Mapping;
-using System.Data.Entity;
 
 namespace OnlineAssessment.Infrastructure
 {
-    public class OnlineAssessmentContext : IdentityDbContext<SystemUser>
+    public class OnlineAssessmentContext :
+        IdentityDbContext<
+            SystemUser, 
+            IdentityRole<Guid, IdentityUserRole<Guid>>, 
+            Guid, 
+            IdentityUserLogin<Guid>,
+            IdentityUserRole<Guid>, 
+            IdentityUserClaim<Guid>>
     {
-        public OnlineAssessmentContext(): base("DefaultConnection")
+        public OnlineAssessmentContext() : base("DefaultConnection")
         {
         }
 
@@ -19,7 +27,8 @@ namespace OnlineAssessment.Infrastructure
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<Teacher> Teachers { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder) {
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
 #if DEBUG
             Database.SetInitializer(new DropCreateDatabaseAlways<OnlineAssessmentContext>());
 #endif

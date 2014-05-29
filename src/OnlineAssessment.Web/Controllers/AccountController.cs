@@ -18,16 +18,18 @@ namespace OnlineAssessment.Web.Controllers
     public class AccountController : Controller
     {
         public AccountController()
-            : this(new UserManager<SystemUser>(new UserStore<SystemUser>(new OnlineAssessmentContext())))
+            : this(new UserManager<SystemUser, Guid>(
+                new UserStore<SystemUser, IdentityRole<Guid, IdentityUserRole<Guid>>, Guid,
+                              IdentityUserLogin<Guid>, IdentityUserRole<Guid>, IdentityUserClaim<Guid>>(new OnlineAssessmentContext())))
         {
         }
 
-        public AccountController(UserManager<SystemUser> userManager)
+        public AccountController(UserManager<SystemUser, Guid> userManager)
         {
             UserManager = userManager;
         }
 
-        public UserManager<SystemUser> UserManager { get; private set; }
+        public UserManager<SystemUser, Guid> UserManager { get; private set; }
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -103,7 +105,7 @@ namespace OnlineAssessment.Web.Controllers
             ViewBag.ReturnUrl = Url.Action("Manage");
             if (ModelState.IsValid)
             {
-                IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+                IdentityResult result = await UserManager.ChangePasswordAsync(Guid.Parse(User.Identity.GetUserId()), model.OldPassword, model.NewPassword);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Manage");
